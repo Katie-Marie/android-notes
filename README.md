@@ -1,0 +1,19 @@
+# Katie-Marie Enlow - Native Android Development & Hardware Integration
+
+Hi! I'm a native Android developer working on precision agriculture software. My day-to-day spans Kotlin and Room, alongside the ongoing migration of a long-lived View-Binding codebase to Jetpack Compose. Plus hardware integration: rate controllers, GPS receivers, and serial-connected agricultural equipment talking to the tablet over USB.
+
+These are notes on things I've learned shipping production Android in that environment - Compose quirks, the gotchas of mixing Views and Compose in the same app, and the less-talked-about corner of Android dev where the device is wired to real hardware. Notes-to-self, made public in case they're useful to someone else doing similar work.
+
+## Posts
+
+### Android framework
+
+_Coming soon - first post in draft._
+
+### Bridging legacy code to Jetpack Compose
+
+_Coming soon._
+
+### Hardware integration
+
+_Coming soon._
