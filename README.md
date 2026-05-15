@@ -8,7 +8,7 @@ These are notes on things I've learned shipping production Android in that envir
 
 ### Android framework
 
-_Coming soon - first post in draft._
+- [2026-05-15 - SharedPreferences listeners don't fire when you register them](posts/2026-05-15-shared-prefs-listener.md)
 
 ### Bridging legacy code to Jetpack Compose
 
