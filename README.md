@@ -9,6 +9,7 @@ These are notes on things I've learned shipping production Android in that envir
 ### Android framework
 
 - [2026-05-15 - SharedPreferences listeners don't fire when you register them](posts/2026-05-15-shared-prefs-listener.md)
+- [2026-05-18 - Why is this `suspend` and that `launch`?](posts/2026-05-18-suspend-vs-launch.md)
 
 ### Bridging legacy code to Jetpack Compose
 
