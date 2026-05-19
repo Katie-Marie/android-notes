@@ -10,6 +10,7 @@ These are notes on things I've learned shipping production Android in that envir
 
 - [2026-05-15 - SharedPreferences listeners don't fire when you register them](posts/2026-05-15-shared-prefs-listener.md)
 - [2026-05-18 - Why is this `suspend` and that `launch`?](posts/2026-05-18-suspend-vs-launch.md)
+- [2026-05-19 - When a property does two unrelated jobs](posts/2026-05-19-two-jobs-one-field.md)
 
 ### Bridging legacy code to Jetpack Compose
 
