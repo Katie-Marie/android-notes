@@ -2,11 +2,13 @@
 
 ## The gotcha
 
-I added a `SharedPreferences.OnSharedPreferenceChangeListener` to keep some UI state in sync with a user setting. It seemed to work fine while testing it until I started with a clean install and realised it was not getting the initial value. That's because `OnSharedPreferenceChangeListener` is just that, for **changes**, and I needed to set the initial value in the init block.
+`SharedPreferences.OnSharedPreferenceChangeListener` fires on **changes**, not on registration. If you need the current value before any change happens, you have to read it explicitly. Easy to miss when you only test the "after a change" flow.
+
+I missed this myself while wiring some UI state to a user setting. It looked fine until a clean install, when the UI sat on the default value because the listener never had anything to fire on. Fix in the immediate code: read the initial value explicitly in the init block before registering the listener.
 
 ## A nicer pattern
 
-This all worked but there has to be a nicer way to initialise and subscribe to changes in the one place right? Well you can wrap the whole thing in a `Flow` that emits the initial value, then emits on changes. The gotcha gets handled inside the helper; callers just subscribe.
+You can wrap both steps in a `Flow` that emits the initial value, then emits on changes. The gotcha gets handled inside the helper; callers just subscribe.
 
 ```kotlin
 fun SharedPreferences.booleanFlow(key: String, default: Boolean): Flow<Boolean> = callbackFlow {
@@ -33,8 +35,8 @@ prefs.booleanFlow(KEY, false)
     .launchIn(viewModelScope)
 ```
 
-The beauty of this is that if you have multiple views using this same SharedPref you can reuse this.
+Multiple views can share the same Flow, so the gotcha is handled once at the source.
 
 ## Where this lives
 
-In the old way I was populating the state from the `ViewState` we expose via the `ViewModel`. This new way of doing things centralises the flow of `SharedPreferences` and puts them in the data layer. That's its own post though, probably one about how the View, ViewModel, and Data layers should connect.
+The old way populated the state from the `ViewState` exposed by the `ViewModel`. This pattern centralises the SharedPreferences read in the data layer where it belongs. That data-layer placement is its own post (coming).
