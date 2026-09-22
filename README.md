@@ -4,6 +4,8 @@ Hi! I'm Katie-Marie Enlow, a native Android developer in New Zealand, working on
 
 These are notes on things I've learned shipping production Android in that environment - Compose quirks, the gotchas of mixing Views and Compose in the same app, and the less-talked-about corner of Android dev where the device is wired to real hardware. Notes-to-self, made public in case they're useful to someone else.
 
+More about me at [katie-marie.github.io](https://katie-marie.github.io).
+
 ## Posts
 
 ### Android framework
