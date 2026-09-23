@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{% seo %}
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%230b5cad%27/%3E%3Ctext x=%2716%27 y=%2722%27 font-family=%27Helvetica,Arial%27 font-size=%2714%27 font-weight=%27bold%27 fill=%27white%27 text-anchor=%27middle%27%3EKE%3C/text%3E%3C/svg%3E">
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #1a1a1a;
+    --muted: #5c5c5c;
+    --rule: #e3e3e3;
+    --link: #0b5cad;
+    --code-bg: #f5f6f8;
+    --tok-comment: #6a737d;
+    --tok-keyword: #cf222e;
+    --tok-string: #0a3069;
+    --tok-number: #0550ae;
+    --tok-name: #8250df;
+    --tok-variable: #953800;
+    --tok-add-fg: #116329;
+    --tok-add-bg: #dafbe1;
+    --tok-del-fg: #82071e;
+    --tok-del-bg: #ffebe9;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #12141a;
+      --fg: #e8e8e8;
+      --muted: #a0a4ad;
+      --rule: #2a2e38;
+      --link: #79b8ff;
+      --code-bg: #1b1e26;
+      --tok-comment: #8b949e;
+      --tok-keyword: #ff7b72;
+      --tok-string: #a5d6ff;
+      --tok-number: #79c0ff;
+      --tok-name: #d2a8ff;
+      --tok-variable: #ffa657;
+      --tok-add-fg: #aff5b4;
+      --tok-add-bg: rgba(46, 160, 67, .15);
+      --tok-del-fg: #ffdcd7;
+      --tok-del-bg: rgba(248, 81, 73, .15);
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-wrap: break-word;
+  }
+  .wrap { max-width: 42rem; margin: 0 auto; padding: 0 1rem; }
+  header.site { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
+                padding: 2rem 0 0; font-size: .95rem; }
+  header.site .name { color: var(--fg); font-weight: 600; }
+  header.site nav a { color: var(--muted); }
+  main { padding: 2.5rem 0 2rem; }
+  a { color: var(--link); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  h1 { font-size: 1.9rem; line-height: 1.2; letter-spacing: -.01em; margin: 0 0 .5rem; }
+  h2 { font-size: 1.3rem; line-height: 1.3; margin: 2.2rem 0 .6rem; }
+  h3 { font-size: 1.05rem; line-height: 1.35; margin: 1.8rem 0 .5rem; }
+  p, ul, ol, blockquote, div.highlighter-rouge { margin: 0 0 1.2rem; }
+  .meta { color: var(--muted); font-size: .92rem; margin: 0 0 2rem; }
+  ul, ol { padding-left: 1.4rem; }
+  li { margin: .3rem 0; }
+  blockquote { margin-left: 0; margin-right: 0; padding: .1rem 0 .1rem 1rem; border-left: 3px solid var(--rule); color: var(--muted); }
+  blockquote p { margin: 0; }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; font-size: .86em; }
+  :not(pre) > code { background: var(--code-bg); padding: .12em .35em; border-radius: 4px; }
+  pre { margin: 0 0 1.2rem; background: var(--code-bg); padding: .9rem 1rem; border-radius: 6px;
+        overflow-x: auto; line-height: 1.5; }
+  pre code { font-size: .84rem; }
+  div.highlighter-rouge pre { margin: 0; }
+  @media (min-width: 58rem) {
+    div.highlighter-rouge { margin-left: -4rem; margin-right: -4rem; }
+  }
+  hr { border: 0; border-top: 1px solid var(--rule); margin: 2rem 0; }
+  footer.site { border-top: 1px solid var(--rule); padding: 1.2rem 0 3rem; color: var(--muted); font-size: .85rem; }
+  footer.site a { color: var(--muted); }
+  .highlight .c, .highlight .c1, .highlight .cm, .highlight .cs, .highlight .cd, .highlight .cp { color: var(--tok-comment); }
+  .highlight .k, .highlight .kd, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kt, .highlight .kc, .highlight .ow { color: var(--tok-keyword); }
+  .highlight .s, .highlight .s1, .highlight .s2, .highlight .sb, .highlight .sc, .highlight .sd, .highlight .se,
+  .highlight .sh, .highlight .si, .highlight .sx, .highlight .sr, .highlight .ss, .highlight .dl { color: var(--tok-string); }
+  .highlight .m, .highlight .mi, .highlight .mf, .highlight .mh, .highlight .mo, .highlight .mb, .highlight .il,
+  .highlight .nb, .highlight .bp, .highlight .no { color: var(--tok-number); }
+  .highlight .nf, .highlight .fm, .highlight .nc, .highlight .nd, .highlight .ne, .highlight .nt { color: var(--tok-name); }
+  .highlight .nv, .highlight .vi, .highlight .vg, .highlight .vc, .highlight .na { color: var(--tok-variable); }
+  .highlight .gi { color: var(--tok-add-fg); background: var(--tok-add-bg); }
+  .highlight .gd { color: var(--tok-del-fg); background: var(--tok-del-bg); }
+  .highlight .gh, .highlight .gu { color: var(--tok-name); }
+  .highlight .err { color: inherit; background: none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="site">
+    <a class="name" href="{{ site.url }}/">Katie-Marie Enlow</a>
+    <nav><a href="{{ '/' | relative_url }}">Notes</a></nav>
+  </header>
+  <main>
+    <article>
+{%- if page.path contains "posts/" %}
+  {%- assign post_date = page.name | slice: 0, 10 %}
+  {%- capture meta %}</h1>
+<p class="meta"><time datetime="{{ post_date }}">{{ post_date | date: "%-d %B %Y" }}</time></p>{% endcapture %}
+{{ content | replace_first: "</h1>", meta }}
+{%- else %}
+{{ content }}
+{%- endif %}
+    </article>
+  </main>
+  <footer class="site">
+    <a href="{{ site.url }}/">katie-marie.github.io</a> · <a href="https://github.com/Katie-Marie/android-notes">Source on GitHub</a>
+  </footer>
+</div>
+</body>
+</html>

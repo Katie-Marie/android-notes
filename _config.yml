@@ -1,0 +1,27 @@
+title: Katie-Marie Enlow
+description: Notes on native Android development and hardware integration by Katie-Marie Enlow. Kotlin, Compose, GPS, rate controllers, USB serial and CAN bus.
+url: https://katie-marie.github.io
+baseurl: /android-notes
+lang: en_NZ
+author: Katie-Marie Enlow
+# Pages would otherwise add its default theme; the site uses its own _layouts/default.html
+theme: null
+
+plugins:
+  - jekyll-seo-tag
+
+optional_front_matter:
+  remove_originals: true
+readme_index:
+  remove_originals: true
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+      image: /assets/og-card.png
+  - scope:
+      path: README.md
+    values:
+      title: Notes
