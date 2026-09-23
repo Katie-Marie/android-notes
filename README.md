@@ -20,4 +20,4 @@ _Coming soon._
 
 ### Hardware integration
 
-_Coming soon._
+- [2026-09-23 - `adb tcpip` drops the transport you're about to read from](posts/2026-09-23-adb-tcpip-drops-the-transport.md)
