@@ -21,3 +21,4 @@ _Coming soon._
 ### Hardware integration
 
 - [2026-09-23 - `adb tcpip` drops the transport you're about to read from](posts/2026-09-23-adb-tcpip-drops-the-transport.md)
+- [2026-09-23 - A nightly test run that stopped early and blamed the wrong tablet](posts/2026-09-23-nightly-blamed-the-wrong-tablet.md)
