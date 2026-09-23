@@ -2,7 +2,7 @@
 
 ## The bug
 
-A few months ago, while testing our messaging feature, I noticed that creating a new conversation did not always navigate into it. Sometimes it worked. Sometimes you tapped "Create" and ended up looking at an empty conversation list with no sign anything had happened. It was inconsistent and very hard to reproduce on a fast emulator.
+While testing our messaging feature, I noticed that creating a new conversation did not always navigate into it. Sometimes it worked. Sometimes you tapped "Create" and ended up looking at an empty conversation list with no sign anything had happened. It was inconsistent and very hard to reproduce on a fast emulator.
 
 The repository function looked like this:
 
@@ -59,5 +59,3 @@ If yes, use `suspend`. If no, fire-and-forget is fine and saves the caller from 
 ## What I took from this
 
 `launch` does not just control where the work runs, it changes the contract with the caller. A `suspend fun` is a promise that the work is done when control returns. A `fun = launch { ... }` is a promise that the work has started. Two very different promises. I had been treating them as interchangeable ways to "do this on a background thread", and that is what caused the bug.
-
-The next post will probably be about `viewModelScope` itself, and why putting `launch` inside a ViewModel is safer than reaching for `GlobalScope`.

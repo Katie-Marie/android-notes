@@ -51,4 +51,4 @@ Six lines moved, no new logic. The tempting fix is to raise the `sleep`, but a l
 
 `adb shell` on a transport that has gone away doesn't fail, it just prints nothing and exits. Capture its stdout into a variable and you get an empty string, which is a perfectly good value for the next `if` to act on.
 
-That is the same shape as the SharedPreferences post further down this list: the call works, and the assumption about **when** it works is wrong. Here it cost a hardware test suite that skipped itself while reporting a reason that was not true.
+That is the same shape as the [SharedPreferences post](2026-05-15-shared-prefs-listener.md): the call works, and the assumption about **when** it works is wrong. Here it cost a hardware test suite that skipped itself while reporting a reason that was not true.

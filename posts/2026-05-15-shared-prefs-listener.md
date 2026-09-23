@@ -39,4 +39,4 @@ Multiple views can share the same Flow, so the gotcha is handled once at the sou
 
 ## Where this lives
 
-The old way populated the state from the `ViewState` exposed by the `ViewModel`. This pattern centralises the SharedPreferences read in the data layer where it belongs. That data-layer placement is its own post (coming).
+The old way populated the state from the `ViewState` exposed by the `ViewModel`. This pattern centralises the SharedPreferences read in the data layer where it belongs.
