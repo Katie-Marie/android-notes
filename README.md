@@ -16,7 +16,7 @@ More about me at [katie-marie.github.io](https://katie-marie.github.io).
 
 ### Bridging legacy code to Jetpack Compose
 
-_Coming soon._
+- [2026-09-24 - Not every screen should move to Compose](posts/2026-09-24-not-every-screen-should-move-to-compose.md)
 
 ### Hardware integration
 
