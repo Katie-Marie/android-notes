@@ -2,7 +2,7 @@
 
 ## The gotcha
 
-We run the app's instrumented tests overnight on a rack of real Android tablets, wired to the hardware they talk to in the field. A shell script walks the roster one tablet at a time: install, smoke test, run the suite, write a row into a summary, move on.
+We run the app's instrumented tests overnight on a rack of real Android tablets. A shell script walks the roster one tablet at a time: install, smoke test, run the suite, write a row into a summary, move on.
 
 One morning the run was red. The summary had exactly one line in it:
 
@@ -21,8 +21,8 @@ Digging into it turned up four more bugs. They fall into two groups, and the sec
 **`grep` finding nothing is not an error, but the shell thinks it is.** The script runs under `set -euo pipefail`. It flips a tablet onto a different USB bus, then reads the tablet's address out of the log of that flip:
 
 ```sh
-net="$(grep -oE '[0-9.]+:5555' "$flip_log" | tail -1)"
-if [ -z "$net" ]; then
+addr="$(grep -oE '[0-9.]+:5555' "$switch_log" | tail -1)"
+if [ -z "$addr" ]; then
     # report it, put the tablet back, carry on
 fi
 ```
@@ -33,14 +33,14 @@ When the flip can't report an address, `grep` exits 1. `pipefail` promotes that 
 
 ```sh
 # does NOT contain the failure: errexit is disabled inside the subshell
-( run_device "$serial" ) || rc=$?
+( run_tablet "$device" ) || rc=$?
 ```
 
 Bash suppresses `errexit` for a command on the left of `||`, and that suppression reaches inside the subshell. Commands after a failing one keep running. Putting an explicit `set -e` as the subshell's first statement doesn't override it either, which I only believed after testing it. This is the form that contains the failure and keeps `errexit` live inside:
 
 ```sh
 set +e
-( set -e; run_device "$serial" )
+( set -e; run_tablet "$device" )
 rc=$?
 set -e
 ```
@@ -50,9 +50,9 @@ The subshell isn't in a checked context, so the parent survives, and the explici
 **A wait with no clock on it.** When a test leg fails, the script reboots the tablet and retries. It waited like this:
 
 ```sh
-adb -s "$serial" reboot
-adb -s "$serial" wait-for-device || true
-while [ "$waited" -lt "$settle" ]; do ...
+adb -s "$device" reboot
+adb -s "$device" wait-for-device || true
+while [ "$waited" -lt "$limit" ]; do ...
 ```
 
 `adb wait-for-device` blocks forever. `|| true` can't rescue a command that never returns to fail, and the loop with the timeout on it sits underneath, unreachable. A tablet that didn't come back parked the run on that line for hours. The fix is `timeout` around it.

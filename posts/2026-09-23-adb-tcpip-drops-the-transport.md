@@ -4,14 +4,14 @@
 
 `adb tcpip 5555` restarts `adbd` on the tablet so it listens on TCP. Restarting it drops the USB transport you were talking over. Any `adb` command you send on that transport in the next few seconds comes back empty, and if you are reading a value rather than checking an exit code, empty looks like an answer.
 
-I hit this on a rack of test tablets. Each tablet sits on a USB switcher so the host can hand it over to other hardware, and once a tablet moves off the host's USB bus we talk to it over Wi-Fi instead. The sequence is: arm network adb, flip the switch, reconnect over the network. Reconnecting needs the tablet's IP address, so we read the address off the tablet while USB still works.
+I hit this on a rack of test tablets. Each tablet sits on a USB switcher, and once a tablet moves off the host's USB bus we talk to it over Wi-Fi instead. The sequence is: arm network adb, flip the switch, reconnect over the network. Reconnecting needs the tablet's IP address, so we read the address off the tablet while USB still works.
 
 We read it one line too late.
 
 ```sh
-adb -s "$serial" tcpip 5555
+adb -s "$device" tcpip 5555
 sleep 2
-ip=$(adb -s "$serial" shell ip -o -4 addr show \
+ip=$(adb -s "$device" shell ip -o -4 addr show \
     | grep -v ' lo ' | awk '{print $4}' | cut -d/ -f1 | head -1)
 ```
 
@@ -39,9 +39,9 @@ Two seconds was not long enough for the USB transport to come back. On another t
 Read the address first.
 
 ```sh
-ip=$(adb -s "$serial" shell ip -o -4 addr show \
+ip=$(adb -s "$device" shell ip -o -4 addr show \
     | grep -v ' lo ' | awk '{print $4}' | cut -d/ -f1 | head -1)
-adb -s "$serial" tcpip 5555
+adb -s "$device" tcpip 5555
 sleep 2
 ```
 

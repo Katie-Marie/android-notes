@@ -2,7 +2,7 @@
 
 ## The gotcha
 
-I was debugging a data corruption bug in an Android app. The fix turned out to be a structural refactor: one property in a data class had quietly been doing two unrelated jobs for years.
+I was debugging a form app where values from one form sometimes showed up in another. The fix turned out to be a structural refactor: one property in a data class had quietly been doing two unrelated jobs.
 
 Here's the setup. A `Field` class:
 
@@ -17,21 +17,21 @@ class Field(
 
 `timestamp` was used in two places:
 
-**Job 1 (persistence):** the app uploads a CSV to a server. Each field gets a column for "when was this field last saved." That value comes from `field.timestamp`.
+**Job 1 (persistence):** each saved field records "when was this field last saved." That value comes from `field.timestamp`.
 
-**Job 2 (UI lock):** for single-fill forms, a field becomes uneditable once it has been saved. The lock check:
+**Job 2 (UI lock):** for forms that can only be filled in once, a field becomes uneditable once it has been saved. The lock check:
 
 ```kotlin
-val isFinal = mode == Single && field.timestamp >= 0
+val isLocked = fillOnce && field.timestamp >= 0
 ```
 
 `timestamp >= 0` meant both "has been saved" AND "the UI must lock this." Same number, two meanings.
 
 ## The workaround that grew
 
-These two purposes started fighting whenever the user was actively typing. We needed to update `timestamp` (so the new save time would persist) but we did NOT want to lock the field mid-edit. So a workaround appeared: a parallel list called `backingFields` that held the new timestamps separately from the displayed fields. The displayed field's `timestamp` stayed at the old value (UI did not lock); `backingFields[i].timestamp` got the new value (for the next save).
+These two purposes started fighting whenever the user was actively typing. We needed to update `timestamp` (so the new save time would persist) but we did NOT want to lock the field mid-edit. So a workaround appeared: a parallel list called `pendingFields` that held the new timestamps separately from the displayed fields. The displayed field's `timestamp` stayed at the old value (UI did not lock); `pendingFields[i].timestamp` got the new value (for the next save).
 
-This dual-list design lived in the codebase for years. It was also the root cause of a race condition that produced cross-form data corruption: two mutable singleton properties that could get out of sync if the user navigated between forms at the wrong moment.
+This dual-list design was also the root cause of the bug: two mutable singleton properties that could get out of sync if the user navigated between forms at the wrong moment.
 
 ## The fix
 
@@ -51,6 +51,6 @@ The UI lock check now reads `field.isEditable`. `timestamp` is free to update du
 
 ## Where this lives
 
-The pattern to watch for: a workaround that feels disproportionate to its stated purpose. The dual-list approach was a lot of machinery (about 80 lines and a process-wide mutable singleton) to manage what felt like a small conflict. When you see this, the question to ask is: is one of these properties doing two unrelated jobs?
+The pattern to watch for: a workaround that feels disproportionate to its stated purpose. The dual-list approach was a lot of machinery to manage what felt like a small conflict. When you see this, the question to ask is: is one of these properties doing two unrelated jobs?
 
 The diff to fix it is usually small. The downstream cleanup is large.
