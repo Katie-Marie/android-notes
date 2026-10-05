@@ -22,3 +22,4 @@ More about me at [katie-marie.github.io](https://katie-marie.github.io).
 
 - [2026-09-23 - `adb tcpip` drops the transport you're about to read from](posts/2026-09-23-adb-tcpip-drops-the-transport.md)
 - [2026-09-23 - A nightly test run that stopped early and blamed the wrong tablet](posts/2026-09-23-nightly-blamed-the-wrong-tablet.md)
+- [2026-10-05 - `flock` shares its lock with everything your command starts](posts/2026-10-05-flock-shares-its-lock.md)
