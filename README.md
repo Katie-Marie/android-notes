@@ -24,4 +24,3 @@ More about me at [katie-marie.github.io](https://katie-marie.github.io).
 - [2026-09-23 - A nightly test run that stopped early and blamed the wrong tablet](posts/2026-09-23-nightly-blamed-the-wrong-tablet.md)
 - [2026-10-05 - `flock` shares its lock with everything your command starts](posts/2026-10-05-flock-shares-its-lock.md)
 - [2026-11-05 - From serial bytes to the screen](posts/2026-11-05-from-serial-bytes-to-the-screen.md)
-- [2026-11-05 - `0xFF` means 'not available', and it's also the top byte of every small negative number](posts/2026-11-05-0xff-means-not-available-and-minus-one.md)
