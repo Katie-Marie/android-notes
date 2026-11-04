@@ -2,7 +2,7 @@
 
 ## The gotcha
 
-Our test tablets each sit on a USB switcher, and one controller drives every switcher through a single serial port. Two flips at the same time could interleave their commands and press the wrong switcher, so the flip script takes a lock on the port first. It re-runs itself under `flock`, so the whole flip happens inside the lock:
+In a test rack, each tablet sits on a USB switcher, and one controller drives every switcher through a single serial port. Two flips at the same time could interleave their commands and press the wrong switcher, so the flip script takes a lock on the port first. It re-runs itself under `flock`, so the whole flip happens inside the lock:
 
 ```sh
 if [ -z "${LOCK_HELD:-}" ]; then
